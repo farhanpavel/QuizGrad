@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Signin() {
   return (
     <div>
-      <div className="container mx-auto flex flex-wrap shadow-lg items-center justify-around p-16 mt-16">
+      <div className="container mx-auto flex flex-wrap shadow-lg place-content-center justify-around text-center p-16 mt-16">
         <div className="space-y-7 flex flex-wrap flex-col justify-center items-center">
           <div>
             <Image
