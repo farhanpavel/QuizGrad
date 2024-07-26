@@ -1,7 +1,47 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+
+import { useRouter } from "next/navigation";
 export default function Signup() {
+  const [user, setUser] = useState({
+    id: 3,
+    name: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
+  const router = useRouter();
+  const { name, email, password, confirmpassword } = user;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(user);
+    if (password == confirmpassword) {
+      try {
+        const response = await fetch("http://localhost:4000/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        if (!response.ok) {
+          alert("Server Error");
+          throw new Error("Failed to submit data");
+        } else {
+          alert("Success");
+          router.push("/signin");
+        }
+      } catch (err) {
+        console.log("error", err);
+      }
+    } else {
+      alert("Password Doesnot Match");
+    }
+  };
   return (
     <div>
       <div className="container mx-auto flex flex-wrap shadow-lg items-center justify-around p-16 mt-16">
@@ -20,39 +60,50 @@ export default function Signup() {
             <p>Please Signup To Your Account</p>
           </div>
           <div>
-            <form action="" className="flex flex-col gap-y-2">
+            <form
+              action=""
+              className="flex flex-col gap-y-2"
+              onSubmit={handleSubmit}
+            >
               <input
                 type="text"
                 name="name"
                 className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
                 placeholder="Name"
+                onChange={handleChange}
+                value={name}
               />
               <input
                 type="text"
-                name="name"
+                name="email"
                 className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
                 placeholder="Email"
+                onChange={handleChange}
+                value={email}
               />
               <input
                 type="password"
                 name="password"
                 className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
                 placeholder="Password"
+                onChange={handleChange}
+                value={password}
               />
               <input
                 type="password"
-                name="password"
+                name="confirmpassword"
                 className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
                 placeholder="Confirm Password"
+                onChange={handleChange}
+                value={confirmpassword}
               />
-            </form>
-          </div>
-          <div className="space-x-3">
-            <button>
-              <Link href={""} className="px-6 py-2 bg-[#FCC822] text-white">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-[#FCC822] text-white "
+              >
                 Register
-              </Link>
-            </button>
+              </button>
+            </form>
           </div>
         </div>
         <div className="order-first md:order-last">

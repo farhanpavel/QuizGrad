@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-interface TeacherFormProps {
+interface StudentFormProps {
   onClose: () => void;
+  selectedEmail: string | null;
 }
-
-const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
+const EditStudentForm: React.FC<StudentFormProps> = ({
+  onClose,
+  selectedEmail,
+}) => {
   const [user, setUser] = useState({
-    id: 2,
+    id: 3,
     name: "",
     email: "",
     password: "",
     confirmpassword: "",
   });
+  const [studentData, setStudentData] = useState([]);
   const router = useRouter();
   const { name, email, password, confirmpassword } = user;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,22 +24,26 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(user);
+    console.log(studentData);
     if (password == confirmpassword) {
       try {
-        const response = await fetch("http://localhost:4000/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
+        const response = await fetch(
+          `http://localhost:4000/api/user/${selectedEmail}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
         } else {
           alert("Success");
           setUser({
-            id: 2,
+            id: 3,
             name: "",
             email: "",
             password: "",
@@ -50,13 +58,39 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/api/user/${selectedEmail}`
+        );
+        if (response.ok) {
+          const json = await response.json();
+          setUser((prevUser) => ({
+            ...prevUser,
+            name: json.name,
+            email: json.email,
+            password: json.password,
+            confirmpassword: json.confirmpassword,
+          }));
+        } else {
+          console.error("Failed to fetch student data");
+        }
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchStudent();
+  }, [selectedEmail]);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="shadow-lg bg-white p-10 lg:w-1/3 md:1/2 rounded">
         <div className="text-right text-2xl font-bold -mt-4">
           <button onClick={onClose}>&times;</button>
         </div>
-        <h1 className="text-center text-lg font-bold">Create Teacher</h1>
+        <h1 className="text-center text-lg font-bold">Create Student</h1>
         <form action="" className="mt-4 space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-y-2">
             <label htmlFor="">Name:</label>
@@ -112,4 +146,4 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     </div>
   );
 };
-export default TeacherForm;
+export default EditStudentForm;

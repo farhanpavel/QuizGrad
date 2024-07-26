@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 interface TeacherFormProps {
   onClose: () => void;
+  selectedEmail: string | null;
 }
-
-const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
+const EditTeacherForm: React.FC<TeacherFormProps> = ({
+  onClose,
+  selectedEmail,
+}) => {
   const [user, setUser] = useState({
     id: 2,
     name: "",
@@ -12,6 +15,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     password: "",
     confirmpassword: "",
   });
+  const [teacherData, setTeacherData] = useState([]);
   const router = useRouter();
   const { name, email, password, confirmpassword } = user;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,15 +24,19 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(user);
+    console.log(teacherData);
     if (password == confirmpassword) {
       try {
-        const response = await fetch("http://localhost:4000/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
+        const response = await fetch(
+          `http://localhost:4000/api/user/${selectedEmail}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
@@ -49,6 +57,32 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
       alert("Password Doesnot Match");
     }
   };
+
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/api/user/${selectedEmail}`
+        );
+        if (response.ok) {
+          const json = await response.json();
+          setUser((prevUser) => ({
+            ...prevUser,
+            name: json.name,
+            email: json.email,
+            password: json.password,
+            confirmpassword: json.confirmpassword,
+          }));
+        } else {
+          console.error("Failed to fetch Teacher data");
+        }
+      } catch (error) {
+        console.error("Error fetching Teacher data:", error);
+      }
+    };
+
+    fetchTeacher();
+  }, [selectedEmail]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -112,4 +146,4 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     </div>
   );
 };
-export default TeacherForm;
+export default EditTeacherForm;

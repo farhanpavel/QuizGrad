@@ -4,13 +4,13 @@ import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
-import { FiAlignJustify } from "react-icons/fi";
+
 import { usePathname } from "next/navigation";
 
 export default function Dashboard() {
   const pathname = usePathname();
   return (
-    <div className="bg-[#ECECE8] h-[85vh] w-[30%]  sm:w-[23%] p-1">
+    <div className="bg-[#dbdbdb] shadow-2xl sm:h-[100vh] w-[30%]  sm:w-[23%] p-1">
       <ul className="space-y-8 font-bold font-custom  mt-3">
         <li>
           <Link
