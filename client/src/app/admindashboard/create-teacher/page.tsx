@@ -72,8 +72,8 @@ export default function CreateTeacher() {
             <Link href={""}>+ Add New</Link>
           </button>
 
-          <div className="shadow-md sm:rounded-lg inline">
-            <table className="mt-10 w-[140vh]  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <div className="shadow-md sm:rounded-lg inline w-full">
+            <table className="mt-10 w-[140vh] 2xl:w-[120vh]  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs   text-gray-700 uppercase bg-gray-50  dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">

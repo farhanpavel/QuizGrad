@@ -8,7 +8,7 @@ import { MdOutlinePending } from "react-icons/md";
 export default function StudentPanel() {
   const pathname = usePathname();
   return (
-    <div className="bg-[#ECECE8] h-[85vh] w-[30%]  sm:w-[23%] p-1">
+    <div className="bg-[#dbdbdb] shadow-2xl sm:h-[100vh] w-[30%]  sm:w-[23%] p-1">
       <ul className="space-y-8 font-bold font-custom  mt-3">
         <li>
           <Link
