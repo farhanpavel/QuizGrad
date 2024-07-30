@@ -41,6 +41,8 @@ const userPost = async (req, res) => {
         teacherData,
       };
       res.status(200).json(combinedData);
+    } else {
+      res.status(200).json(userData);
     }
   } catch (err) {
     res.status(500).json("Error on user post request");
@@ -90,14 +92,13 @@ const userPut = async (req, res) => {
 const userDelete = async (req, res) => {
   try {
     const userData = await User.deleteOne({ email: req.params.email });
-
     const Data = await Student.deleteOne({ email: req.params.email });
     if (Data.deletedCount == 0) {
       const Data = await Teacher.deleteOne({ email: req.params.email });
     }
     const combinedData = {
       Data,
-      studentData,
+      userData,
     };
 
     res.status(200).json(combinedData);

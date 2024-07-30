@@ -10,6 +10,8 @@ export default function DashboardHeader() {
   const logOut = () => {
     Cookies.remove("loggedin");
     Cookies.remove("role");
+    Cookies.remove("name");
+    Cookies.remove("code");
     router.push("/");
   };
 

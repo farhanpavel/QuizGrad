@@ -38,7 +38,8 @@ export default function TeacherPanel() {
           <Link
             href="/teacherdashboard/create-quiz"
             className={`flex items-center ${
-              pathname === "/teacherdashboard/create-quiz"
+              pathname === "/teacherdashboard/create-quiz" ||
+              pathname === "/teacherdashboard/create-quiz-main"
                 ? "bg-slate-500 p-3"
                 : ""
             }`}

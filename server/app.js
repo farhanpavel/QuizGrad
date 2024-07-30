@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const userRouter = require("./routes/userModel");
-const studentRouter = require("./routes/studentModel");
-const teacherRouter = require("./routes/teacherModel");
+const userRouter = require("./routes/userRoute");
+const studentRouter = require("./routes/studentRoute");
+const teacherRouter = require("./routes/teacherRoute");
 const cors = require("cors");
+const questionRouter = require("./routes/questionRoute");
+const courseRouter = require("./routes/courseRoute");
 require("dotenv").config();
 const app = express();
 app.use(cors());
@@ -25,3 +27,5 @@ app.listen(PORT, () => {
 app.use("/api/user", userRouter);
 app.use("/api/student", studentRouter);
 app.use("/api/teacher", teacherRouter);
+app.use("/api/question", questionRouter);
+app.use("/api/course", courseRouter);

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import StudentForm from "@/app/_components/StudentForm/page";
 import EditStudentForm from "@/app/_components/EditStudentForm/page";
+
 interface student {
   name: string;
   email: string;
