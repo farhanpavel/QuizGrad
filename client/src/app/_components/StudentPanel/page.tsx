@@ -32,19 +32,6 @@ export default function StudentPanel() {
             Pending
           </Link>
         </li>
-        <li>
-          <Link
-            href="/studentdashboard/quizlist"
-            className={`flex items-center ${
-              pathname === "/studentdashboard/quizlist"
-                ? "bg-slate-500 p-3"
-                : ""
-            }`}
-          >
-            <FaQuestionCircle className="text-2xl mr-2" />
-            Quiz list
-          </Link>
-        </li>
       </ul>
     </div>
   );

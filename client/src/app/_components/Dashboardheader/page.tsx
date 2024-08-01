@@ -12,6 +12,8 @@ export default function DashboardHeader() {
     Cookies.remove("role");
     Cookies.remove("name");
     Cookies.remove("code");
+    Cookies.remove("studentemail");
+    Cookies.remove("teachername");
     router.push("/");
   };
 

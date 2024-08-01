@@ -11,7 +11,14 @@ const courseGet = async (req, res) => {
     res.status(500).json("Error on Get Request");
   }
 };
-
+// const courseGetbystudent = async (req, res) => {
+//   try {
+//     const course = await Course.find({ teacher_name: req.params.name });
+//     res.status(200).json(course);
+//   } catch (err) {
+//     res.status(500).json("Error on Get Request");
+//   }
+// };
 const coursePost = async (req, res) => {
   try {
     const course = await Course.create(req.body);

@@ -1,23 +1,21 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const courseSchema = mongoose.Schema({
+const assignstudentSchema = mongoose.Schema({
   teacher_name: {
     type: String,
     required: true,
   },
-  course_name: {
+  course_code: {
     type: String,
     required: true,
   },
-
-  course_code: {
-    type: Number,
+  student_email: {
+    type: String,
     required: true,
-    unique: true,
   },
-  time: {
+  active: {
     type: Number,
     required: true,
   },
 });
-module.exports = { courseSchema };
+module.exports = { assignstudentSchema };

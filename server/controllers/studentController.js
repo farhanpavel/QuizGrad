@@ -3,7 +3,10 @@ const { studentSchema } = require("../models/studentSchema");
 const Student = mongoose.model("student", studentSchema);
 const studentGet = async (req, res) => {
   try {
-    const studentData = await Student.find();
+    const query = req.query.email
+      ? { email: new RegExp(req.query.email, "i") }
+      : {};
+    const studentData = await Student.find(query);
     res.status(200).json(studentData);
   } catch (err) {
     res.status(500).json("Error on student get request");

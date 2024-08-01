@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const questionSchema = mongoose.Schema({
+const studentansSchema = mongoose.Schema({
   teacher_name: {
     type: String,
     required: true,
@@ -9,33 +9,21 @@ const questionSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  course_id: {
+  course_code: {
     type: String,
     required: true,
   },
-  question: {
+  student_ans: {
+    type: String,
+    required: false,
+  },
+  student_name: {
     type: String,
     required: true,
   },
-  optionOne: {
-    type: String,
-    required: true,
-  },
-  optionTwo: {
-    type: String,
-    required: true,
-  },
-  optionThree: {
-    type: String,
-    required: true,
-  },
-  optionFour: {
-    type: String,
-    required: true,
-  },
-  ans: {
+  student_email: {
     type: String,
     required: true,
   },
 });
-module.exports = { questionSchema };
+module.exports = { studentansSchema };

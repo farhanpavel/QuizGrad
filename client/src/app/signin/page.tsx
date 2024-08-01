@@ -56,6 +56,7 @@ export default function Signin() {
         Cookies.set("loggedin", "true");
         Cookies.set("role", data.id.toString());
         Cookies.set("name", data.name.toString());
+        Cookies.set("studentemail", data.email.toString());
         alert("Login successful!");
 
         if (data.id === 1) {
