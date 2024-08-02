@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 const { courseSchema } = require("../models/courseSchema");
 const { questionSchema } = require("../models/questionSchema");
+const { assignstudentSchema } = require("../models/assignstudentSchema");
+const { studentansSchema } = require("../models/studentansSchema");
 const Course = mongoose.model("course", courseSchema);
 const Question = mongoose.model("question", questionSchema);
+const Assignstudent = mongoose.model("assignstudent", assignstudentSchema);
+const Studentans = mongoose.model("studentans", studentansSchema);
 const courseGet = async (req, res) => {
   try {
     const course = await Course.find({ teacher_name: req.params.name });
@@ -37,9 +41,19 @@ const courseDelete = async (req, res) => {
       course_id: req.params.code,
       teacher_name: req.params.name,
     });
+    const studentassign = await Assignstudent.deleteMany({
+      course_code: req.params.code,
+      teacher_name: req.params.name,
+    });
+    const studentans = await Studentans.deleteMany({
+      course_code: req.params.code,
+      teacher_name: req.params.name,
+    });
     const combineData = {
       course,
       question,
+      studentassign,
+      studentans,
     };
     res.status(200).json(combineData);
   } catch (err) {

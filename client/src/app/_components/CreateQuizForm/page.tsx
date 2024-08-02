@@ -58,7 +58,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-2">
             <label htmlFor="">Course Code:</label>
             <input
               type="name"
@@ -68,7 +68,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-2">
             <label htmlFor="">Time:</label>
             <input
               type="number"

@@ -100,7 +100,7 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
         </div>
         <h1 className="text-center text-lg font-bold">Assign Student</h1>
         <form action="" className="mt-4 space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-2">
             <label htmlFor="">Add Students:</label>
             <input
               type="text"

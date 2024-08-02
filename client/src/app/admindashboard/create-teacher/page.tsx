@@ -102,8 +102,11 @@ export default function CreateTeacher() {
               </thead>
               <tbody>
                 {teacherData &&
-                  teacherData.map((data) => (
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
+                  teacherData.map((data, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 "
+                    >
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

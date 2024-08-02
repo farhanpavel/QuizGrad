@@ -35,7 +35,7 @@ export default function Admindashboard({ children }: LayoutProps) {
   return (
     <div>
       <Dashboardheader />
-      <div className="flex flex-wrap w-full ">
+      <div className="flex  ">
         <Dashboard />
         {loading ? <LoadingSpinner /> : <>{children}</>}
       </div>

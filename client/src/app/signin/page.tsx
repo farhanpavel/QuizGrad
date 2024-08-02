@@ -122,7 +122,7 @@ export default function Signin() {
                   </button>
                   <button>
                     <Link
-                      href={""}
+                      href={"/signup"}
                       className="px-6 py-2 border-[1px] border-[#FCC822] text-[#FCC822]"
                     >
                       Sign up

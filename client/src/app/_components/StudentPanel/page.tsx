@@ -1,20 +1,22 @@
 import React from "react";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
-import { FaQuestionCircle } from "react-icons/fa";
-
-import { usePathname } from "next/navigation";
 import { MdOutlinePending } from "react-icons/md";
+import { usePathname } from "next/navigation";
+
 export default function StudentPanel() {
   const pathname = usePathname();
+
   return (
-    <div className="bg-[#dbdbdb] shadow-2xl sm:h-[100vh] w-[30%]  sm:w-[23%] p-1">
-      <ul className="space-y-8 font-bold font-custom  mt-3">
+    <div className="bg-gradient-to-r from-gray-200 to-gray-400 shadow-2xl min-h-[100vh] w-[30%] sm:w-[23%] p-4">
+      <ul className="space-y-6 font-bold font-custom mt-8">
         <li>
           <Link
             href="/studentdashboard/home"
-            className={`flex items-center ${
-              pathname === "/studentdashboard/home" ? "bg-slate-500 p-3" : ""
+            className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
+              pathname === "/studentdashboard/home"
+                ? "bg-slate-700 text-white p-3 rounded-lg"
+                : "bg-white text-gray-800 hover:bg-slate-500 hover:text-white p-3 rounded-lg"
             }`}
           >
             <FaHome className="text-2xl mr-2" />
@@ -24,8 +26,10 @@ export default function StudentPanel() {
         <li>
           <Link
             href="/studentdashboard/pending"
-            className={`flex items-center ${
-              pathname === "/studentdashboard/pending" ? "bg-slate-500 p-3" : ""
+            className={`flex items-center p-3 rounded-lg transition-colors duration-300 ${
+              pathname === "/studentdashboard/pending"
+                ? "bg-slate-700 text-white p-3 rounded-lg"
+                : "bg-white text-gray-800 hover:bg-slate-500 hover:text-white p-3 rounded-lg"
             }`}
           >
             <MdOutlinePending className="text-2xl mr-2" />

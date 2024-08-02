@@ -56,9 +56,46 @@ const getQuizResults = async (req, res) => {
     res.status(500).json("Error on get quiz results request");
   }
 };
+const viewStudentAnswers = async (req, res) => {
+  const { email, course_code } = req.params;
+  try {
+    const studentAnswers = await Studentans.find({
+      student_email: email,
+      course_code,
+    });
 
+    const questionIds = studentAnswers.map((ans) => ans.question_id);
+
+    const questions = await Question.find({
+      question_id: { $in: questionIds },
+    });
+
+    const results = studentAnswers.map((studentAns) => {
+      const question = questions.find(
+        (q) => q.question_id === studentAns.question_id
+      );
+      return {
+        question: question.question,
+        options: {
+          optionOne: question.optionOne,
+          optionTwo: question.optionTwo,
+          optionThree: question.optionThree,
+          optionFour: question.optionFour,
+        },
+        correctAnswer: question.ans,
+        studentAnswer: studentAns.student_ans,
+      };
+    });
+
+    res.status(200).json({ results });
+  } catch (err) {
+    console.error("Error fetching student answers:", err);
+    res.status(500).json("Error on get student answers request");
+  }
+};
 module.exports = {
   studentansGet,
   studentansPost,
   getQuizResults,
+  viewStudentAnswers,
 };

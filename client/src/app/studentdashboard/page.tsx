@@ -36,7 +36,7 @@ export default function Studentdashboard({ children }: LayoutProps) {
   return (
     <div>
       <Dashboardheader />
-      <div className="flex flex-wrap">
+      <div className="flex ">
         <StudentPanel />
         {loading ? <LoadingSpinner /> : <>{children}</>}
       </div>

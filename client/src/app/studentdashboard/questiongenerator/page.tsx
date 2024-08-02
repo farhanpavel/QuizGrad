@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import SuccessPage from "@/app/_components/SuccessPage/page";
 
@@ -32,8 +32,9 @@ export default function QuestionGenerator() {
   const [questionData, setQuestionData] = useState<Question[]>([]);
   const [questionCount, setQuestionCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [quiz, setQuiz] = useState<QuizAnswer[]>([]);
   const [timeLeft, setTimeLeft] = useState(0);
+
+  const quizRef = useRef<QuizAnswer[]>([]);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -50,7 +51,7 @@ export default function QuestionGenerator() {
           teacher_name: teachername,
           course_code: courseCode,
         }));
-        setQuiz(initialQuiz);
+        quizRef.current = initialQuiz;
         setQuestionData(json);
         setQuestionCount(json.length);
         setTimeLeft(parseInt(json[0].time) * 60);
@@ -71,23 +72,37 @@ export default function QuestionGenerator() {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        handleSubmit();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   const handleAnswerChange = (index: number, value: string) => {
-    const updatedQuiz = quiz.map((item, idx) =>
+    const updatedQuiz = quizRef.current.map((item, idx) =>
       idx === index ? { ...item, student_ans: value } : item
     );
-    setQuiz(updatedQuiz);
+    quizRef.current = updatedQuiz;
   };
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    console.log(quiz);
+    console.log(quizRef.current);
     try {
       const response = await fetch(`http://localhost:4000/api/studentans`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(quiz),
+        body: JSON.stringify(quizRef.current),
       });
       if (!response.ok) {
         alert("Server Error");
@@ -128,12 +143,12 @@ export default function QuestionGenerator() {
             className="shadow-xl rounded-lg bg-white md:w-1/2 text-xl font-bold space-y-4 p-4"
           >
             <div className="mb-4 space-y-4">
-              <div className="flex gap-x-2 items-center">
+              <div className="flex gap-x-2 items-center select-none">
                 <h1 className="text-lg text-blue-700 uppercase">
                   {index + 1}. {data.question}
                 </h1>
               </div>
-              <div className="flex gap-x-2 items-center font-medium">
+              <div className="flex gap-x-2 items-center font-medium select-none">
                 <input
                   type="radio"
                   id={`option1-${index}`}
@@ -145,7 +160,7 @@ export default function QuestionGenerator() {
                   {data.optionOne}
                 </label>
               </div>
-              <div className="flex gap-x-2 items-center font-medium">
+              <div className="flex gap-x-2 items-center font-medium select-none">
                 <input
                   type="radio"
                   id={`option2-${index}`}
@@ -157,7 +172,7 @@ export default function QuestionGenerator() {
                   {data.optionTwo}
                 </label>
               </div>
-              <div className="flex gap-x-2 items-center font-medium">
+              <div className="flex gap-x-2 items-center font-medium select-none">
                 <input
                   type="radio"
                   id={`option3-${index}`}
@@ -169,7 +184,7 @@ export default function QuestionGenerator() {
                   {data.optionThree}
                 </label>
               </div>
-              <div className="flex gap-x-2 items-center font-medium">
+              <div className="flex gap-x-2 items-center font-medium select-none">
                 <input
                   type="radio"
                   id={`option4-${index}`}

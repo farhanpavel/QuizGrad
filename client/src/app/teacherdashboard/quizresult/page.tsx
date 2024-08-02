@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Teacherdashboard from "../page";
+import { useRouter } from "next/navigation";
 interface resultData {
   student_name: string;
   student_email: string;
@@ -11,9 +12,19 @@ interface resultData {
 export default function QuizResults() {
   const [results, setResults] = useState<resultData[]>([]);
   const [loading, setLoading] = useState(true);
-  const teacherName = Cookies.get("name"); // Corrected from 'name' to 'teachername'
-  const submit = () => {
+  const teacherName = Cookies.get("name");
+  Cookies.remove("email");
+  Cookies.remove("marks");
+  Cookies.remove("code");
+
+  const router = useRouter();
+  const submit = (email: string, code: string, mark: string) => {
     console.log(results);
+    Cookies.set("email", email.toString());
+    Cookies.set("code", code.toString());
+    Cookies.set("marks", mark.toString());
+
+    router.push(`/teacherdashboard/quizresultview`);
   };
   useEffect(() => {
     const fetchResults = async () => {
@@ -43,7 +54,7 @@ export default function QuizResults() {
   return (
     <Teacherdashboard>
       <div className="font-custom  mx-5 space-y-4">
-        <div className="text-2xl mt-2 font-bold">
+        <div className="text-2xl mt-2 font-bold text-center">
           <h1>Quiz Result</h1>
         </div>
         <table className="lg:w-[140vh] md:min-w-[80vh] divide-y divide-gray-200">
@@ -83,7 +94,13 @@ export default function QuizResults() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <button
-                    onClick={submit}
+                    onClick={() =>
+                      submit(
+                        result.student_email,
+                        result.course_code,
+                        result.marks
+                      )
+                    }
                     className="text-blue-600 hover:text-blue-900"
                   >
                     View
