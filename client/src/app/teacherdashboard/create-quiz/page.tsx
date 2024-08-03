@@ -48,7 +48,7 @@ export default function CreateQuiz() {
   const deletePass = async (e: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/course/${e}/${teacherName}`,
+        `https://quizgrad-server-11zr.onrender.com/api/course/${e}/${teacherName}`,
         {
           method: "DELETE",
           headers: {
