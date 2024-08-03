@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import CreateQuiz from "../teacherdashboard/create-quiz/page";
 
 export default function Signin() {
   const [user, setUser] = useState({ email: "", password: "" });

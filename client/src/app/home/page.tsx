@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Header from "../_components/Header/page";
 import Link from "next/link";
+import Header from "../_components/Header/page";
 
 export default function Home() {
   return (
