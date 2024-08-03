@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex flex-wrap justify-between  p-4 border-[1px] border-[#ECECE8] ">
         <div>
           <Image
-            src="/images/logo.png"
+            src="/images/Logo.png"
             width={260}
             height={200}
             alt="logo"
