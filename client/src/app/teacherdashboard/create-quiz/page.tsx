@@ -23,7 +23,7 @@ export default function CreateQuiz() {
     };
     const fetchCourse = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/course/${teacherName}`
+        `https://quizgrad-server-11zr.onrender.com/api/course/${teacherName}`
       );
       const json = await response.json();
 

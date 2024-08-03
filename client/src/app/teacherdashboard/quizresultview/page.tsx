@@ -36,7 +36,7 @@ export default function QuestionGenerator() {
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/studentans/view/${email}/${course_code}`
+        `https://quizgrad-server-11zr.onrender.com/api/studentans/view/${email}/${course_code}`
       );
       const json = await response.json();
       if (response.ok) {

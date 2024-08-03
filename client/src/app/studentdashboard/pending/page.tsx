@@ -18,7 +18,7 @@ export default function Page() {
   useEffect(() => {
     const fetchStudent = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/assignstudent/${studentemail}`
+        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${studentemail}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -35,7 +35,7 @@ export default function Page() {
     setClick(false);
     try {
       const response = await fetch(
-        `http://localhost:4000/api/assignstudent/${teacherName}/${id}/${studentemail}`,
+        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${teacherName}/${id}/${studentemail}`,
         {
           method: "PUT",
           headers: {

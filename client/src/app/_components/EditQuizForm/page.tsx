@@ -31,7 +31,7 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/question/${selectedId}`,
+        `https://quizgrad-server-11zr.onrender.com/api/question/${selectedId}`,
         {
           method: "PUT",
           headers: {
@@ -55,7 +55,7 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
     const fetchQuiz = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/question/quiz/${selectedId}`
+          `https://quizgrad-server-11zr.onrender.com/api/question/quiz/${selectedId}`
         );
         if (response.ok) {
           const json = await response.json();

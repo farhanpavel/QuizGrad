@@ -49,13 +49,16 @@ const QuizAddingForm: React.FC<QuizFormProps> = ({ onClose }) => {
     };
     console.log(quizData);
     try {
-      const response = await fetch("http://localhost:4000/api/question", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(quizData),
-      });
+      const response = await fetch(
+        "https://quizgrad-server-11zr.onrender.com/api/question",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(quizData),
+        }
+      );
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");

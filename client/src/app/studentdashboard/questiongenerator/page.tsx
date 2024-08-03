@@ -39,7 +39,7 @@ export default function QuestionGenerator() {
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/question/data/${courseCode}/${teachername}`
+        `https://quizgrad-server-11zr.onrender.com/api/question/data/${courseCode}/${teachername}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -97,13 +97,16 @@ export default function QuestionGenerator() {
     if (e) e.preventDefault();
     console.log(quizRef.current);
     try {
-      const response = await fetch(`http://localhost:4000/api/studentans`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(quizRef.current),
-      });
+      const response = await fetch(
+        `https://quizgrad-server-11zr.onrender.com/api/studentans`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(quizRef.current),
+        }
+      );
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");

@@ -28,7 +28,7 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
     if (password == confirmpassword) {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/user/${selectedEmail}`,
+          `https://quizgrad-server-11zr.onrender.com/api/user/${selectedEmail}`,
           {
             method: "PUT",
             headers: {
@@ -62,7 +62,7 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
     const fetchTeacher = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/user/${selectedEmail}`
+          `https://quizgrad-server-11zr.onrender.com/api/user/${selectedEmail}`
         );
         if (response.ok) {
           const json = await response.json();

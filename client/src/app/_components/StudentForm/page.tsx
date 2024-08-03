@@ -22,13 +22,16 @@ const StudentForm: React.FC<StudentFormProps> = ({ onClose }) => {
     console.log(user);
     if (password == confirmpassword) {
       try {
-        const response = await fetch("http://localhost:4000/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
+        const response = await fetch(
+          "https://quizgrad-server-11zr.onrender.com/api/user",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        );
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");

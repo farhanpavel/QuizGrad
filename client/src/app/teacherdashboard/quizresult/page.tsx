@@ -30,7 +30,7 @@ export default function QuizResults() {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/studentans/results?teacher_name=${teacherName}`
+          `https://quizgrad-server-11zr.onrender.com/api/studentans/results?teacher_name=${teacherName}`
         );
 
         if (response.ok) {

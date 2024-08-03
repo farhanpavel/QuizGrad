@@ -53,12 +53,15 @@ export default function QuizMain() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/question/${e}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://quizgrad-server-11zr.onrender.com/api/question/${e}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -72,7 +75,7 @@ export default function QuizMain() {
   const studentDelete = async (e: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/assignstudent/${e}/${course_code}`,
+        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${e}/${course_code}`,
         {
           method: "DELETE",
           headers: {
@@ -93,7 +96,7 @@ export default function QuizMain() {
   useEffect(() => {
     const fetchQuiz = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/question/course/${course_code}/${teacherName}`
+        `https://quizgrad-server-11zr.onrender.com/api/question/course/${course_code}/${teacherName}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -102,7 +105,7 @@ export default function QuizMain() {
     };
     const studentInfo = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/assignstudent/${course_code}/${teacherName}`
+        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${course_code}/${teacherName}`
       );
       const json = await response.json();
       if (response.ok) {

@@ -24,7 +24,7 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
     for (const student of quiz.students) {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/assignstudent",
+          "https://quizgrad-server-11zr.onrender.com/api/assignstudent",
           {
             method: "POST",
             headers: {
@@ -59,7 +59,7 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
     if (e.target.value.length > 0) {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/student?email=${e.target.value}`
+          `https://quizgrad-server-11zr.onrender.com/api/student?email=${e.target.value}`
         );
         if (response.ok) {
           const suggestions = await response.json();

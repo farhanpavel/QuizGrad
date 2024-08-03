@@ -31,12 +31,15 @@ export default function Page() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/user/${e}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://quizgrad-server-11zr.onrender.com/api/user/${e}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -49,7 +52,9 @@ export default function Page() {
   };
   useEffect(() => {
     const fetchStudent = async () => {
-      const response = await fetch("http://localhost:4000/api/student");
+      const response = await fetch(
+        "https://quizgrad-server-11zr.onrender.com/api/student"
+      );
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);
