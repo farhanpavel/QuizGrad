@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import SuccessPage from "@/app/_components/SuccessPage/page";
+import { url } from "@/app/_components/Url/page";
 
 interface Question {
   question: string;
@@ -39,7 +40,7 @@ export default function QuestionGenerator() {
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/question/data/${courseCode}/${teachername}`
+        `${url}/api/question/data/${courseCode}/${teachername}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -75,6 +76,7 @@ export default function QuestionGenerator() {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
+        alert("Cheating Detected");
         handleSubmit();
       }
     };
@@ -97,16 +99,13 @@ export default function QuestionGenerator() {
     if (e) e.preventDefault();
     console.log(quizRef.current);
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/studentans`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(quizRef.current),
-        }
-      );
+      const response = await fetch(`${url}/api/studentans`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizRef.current),
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");

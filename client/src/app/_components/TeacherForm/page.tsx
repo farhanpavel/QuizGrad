@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { url } from "../Url/page";
+
 interface TeacherFormProps {
   onClose: () => void;
 }
@@ -22,16 +24,13 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     console.log(user);
     if (password == confirmpassword) {
       try {
-        const response = await fetch(
-          "https://quizgrad-server-11zr.onrender.com/api/user",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-          }
-        );
+        const response = await fetch(`${url}/api/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
@@ -61,7 +60,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
         </div>
         <h1 className="text-center text-lg font-bold">Create Teacher</h1>
         <form action="" className="mt-4 space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Name:</label>
             <input
               type="name"
@@ -71,7 +70,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Email:</label>
             <input
               type="email"
@@ -82,7 +81,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Password:</label>
             <input
               type="password"
@@ -92,7 +91,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Confirm Password:</label>
             <input
               type="password"
@@ -102,10 +101,10 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="text-center mt-10">
+          <div className="text-center mt-5">
             <button
               type="submit"
-              className="bg-[#FCC822] py-1 px-4 font-custom  rounded text-white"
+              className="bg-black py-1 px-4 font-custom text-sm  rounded text-white"
             >
               Submit
             </button>

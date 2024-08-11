@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
+import { url } from "../Url/page";
 interface QuizFormProps {
   onClose: () => void;
 }
@@ -49,16 +50,13 @@ const QuizAddingForm: React.FC<QuizFormProps> = ({ onClose }) => {
     };
     console.log(quizData);
     try {
-      const response = await fetch(
-        "https://quizgrad-server-11zr.onrender.com/api/question",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(quizData),
-        }
-      );
+      const response = await fetch(`${url}/api/question`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -180,10 +178,10 @@ const QuizAddingForm: React.FC<QuizFormProps> = ({ onClose }) => {
             />
           </div>
 
-          <div className="text-center mt-10">
+          <div className="text-center mt-5">
             <button
               type="submit"
-              className="bg-[#FCC822] py-1 px-4 font-custom  rounded text-white"
+              className="bg-black py-1 px-4 font-custom text-sm  rounded text-white"
             >
               Submit
             </button>

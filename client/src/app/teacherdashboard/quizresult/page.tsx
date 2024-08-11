@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Teacherdashboard from "../page";
 import { useRouter } from "next/navigation";
+import { url } from "@/app/_components/Url/page";
+
 interface resultData {
   student_name: string;
   student_email: string;
@@ -30,7 +32,7 @@ export default function QuizResults() {
     const fetchResults = async () => {
       try {
         const response = await fetch(
-          `https://quizgrad-server-11zr.onrender.com/api/studentans/results?teacher_name=${teacherName}`
+          `${url}/api/studentans/results?teacher_name=${teacherName}`
         );
 
         if (response.ok) {

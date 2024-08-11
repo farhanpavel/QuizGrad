@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { url } from "../_components/Url/page";
 
 export default function Signin() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -41,15 +42,12 @@ export default function Signin() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/user/${email}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${url}/api/user/${email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("invalid");
       }
@@ -79,7 +77,7 @@ export default function Signin() {
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
+        <div className="w-[80%] sm:w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
           <div className="space-y-7 flex flex-wrap flex-col justify-center items-center">
             <div>
               <Image

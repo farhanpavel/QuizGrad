@@ -10,9 +10,11 @@ export default function page() {
         <div className="mt-2  text-sm sm:text-xl text-center font-bold mx-auto 2xl:text-5xl">
           <h1>Welcome To Teacher Panel</h1>
           <div className="text-5xl 2xl:text-7xl font-extrabold uppercase">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-700">
-              {teacherName}
-            </span>
+            <div className="text-5xl font-extrabold ">
+              <span className="uppercase bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                {teacherName}
+              </span>
+            </div>
           </div>
         </div>
       </Teacherdashboard>

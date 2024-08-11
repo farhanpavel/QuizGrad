@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-
 import { useRouter } from "next/navigation";
+import { url } from "../Url/page";
 
 interface QuizFormProps {
   onClose: () => void;
@@ -23,21 +23,18 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
 
     for (const student of quiz.students) {
       try {
-        const response = await fetch(
-          "https://quizgrad-server-11zr.onrender.com/api/assignstudent",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              student_email: student.email,
-              teacher_name: teacherName,
-              course_code: courseCode,
-              active: 0,
-            }),
-          }
-        );
+        const response = await fetch(`${url}/api/assignstudent`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            student_email: student.email,
+            teacher_name: teacherName,
+            course_code: courseCode,
+            active: 0,
+          }),
+        });
 
         if (!response.ok) {
           alert("Server Error");
@@ -59,7 +56,7 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
     if (e.target.value.length > 0) {
       try {
         const response = await fetch(
-          `https://quizgrad-server-11zr.onrender.com/api/student?email=${e.target.value}`
+          `${url}/api/student?email=${e.target.value}`
         );
         if (response.ok) {
           const suggestions = await response.json();
@@ -140,10 +137,10 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
               </div>
             ))}
           </div>
-          <div className="text-center mt-10">
+          <div className="text-center mt-5">
             <button
               type="submit"
-              className="bg-[#FCC822] py-1 px-4 font-custom rounded text-white"
+              className="bg-black py-1 px-4 font-custom text-sm  rounded text-white"
             >
               Submit
             </button>

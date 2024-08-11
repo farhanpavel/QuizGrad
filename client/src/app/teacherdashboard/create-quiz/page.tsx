@@ -6,6 +6,8 @@ import Cookies from "js-cookie";
 import Teacherdashboard from "../page";
 import QuizForm from "@/app/_components/CreateQuizForm/page";
 import { useRouter } from "next/navigation";
+import { url } from "@/app/_components/Url/page";
+
 interface quiz {
   course_name: string;
   course_code: string;
@@ -22,9 +24,7 @@ export default function CreateQuiz() {
       setLoading(false);
     };
     const fetchCourse = async () => {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/course/${teacherName}`
-      );
+      const response = await fetch(`${url}/api/course/${teacherName}`);
       const json = await response.json();
 
       if (response.ok) {
@@ -47,15 +47,12 @@ export default function CreateQuiz() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/course/${e}/${teacherName}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${url}/api/course/${e}/${teacherName}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -74,11 +71,11 @@ export default function CreateQuiz() {
             isFormVisible ? "opacity-50" : ""
           }`}
         >
-          <h1 className="font-bold text-sm">Create Course</h1>
+          <h1 className="font-bold text-lg">Create Course</h1>
 
           <div className="space-x-4">
             <button
-              className="bg-[#FCC822] py-1 px-4 font-custom font-bold rounded text-white"
+              className="bg-black py-1 px-4 font-custom text-sm font-medium rounded text-white"
               onClick={enableForm}
             >
               <Link href={""}>+ Add New</Link>

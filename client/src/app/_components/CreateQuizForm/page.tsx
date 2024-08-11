@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import QuizMain from "@/app/teacherdashboard/create-quiz-main/page";
-
+import { url } from "../Url/page";
 interface QuizFormProps {
   onClose: () => void;
 }
@@ -20,16 +20,13 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "https://quizgrad-server-11zr.onrender.com/api/course",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(quiz),
-        }
-      );
+      const response = await fetch(`${url}/api/course`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quiz),
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -51,7 +48,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
         </div>
         <h1 className="text-center text-lg font-bold">Create Course</h1>
         <form action="" className="mt-4 space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Course Title:</label>
             <input
               type="name"
@@ -61,7 +58,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Course Code:</label>
             <input
               type="name"
@@ -71,7 +68,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col text-sm">
             <label htmlFor="">Time:</label>
             <input
               type="number"
@@ -82,10 +79,10 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
             />
           </div>
 
-          <div className="text-center mt-10">
+          <div className="text-center mt-5">
             <button
               type="submit"
-              className="bg-[#FCC822] py-1 px-4 font-custom  rounded text-white"
+              className="bg-black py-1 px-4 font-custom text-sm  rounded text-white"
             >
               Submit
             </button>

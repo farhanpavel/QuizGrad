@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { url } from "../_components/Url/page";
+
 export default function Signup() {
   const [user, setUser] = useState({
     id: 3,
@@ -43,16 +45,13 @@ export default function Signup() {
     console.log(user);
     if (password == confirmpassword) {
       try {
-        const response = await fetch(
-          "https://quizgrad-server-11zr.onrender.com/api/user",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-          }
-        );
+        const response = await fetch(`${url}/api/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
@@ -69,7 +68,7 @@ export default function Signup() {
   };
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
+      <div className="w-[80%] sm:w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
         <div className="space-y-7 flex flex-wrap flex-col justify-center items-center">
           <div>
             <Image

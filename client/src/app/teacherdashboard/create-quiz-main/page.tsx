@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import QuizAddingForm from "@/app/_components/CreateQuizAddingForm/page";
 import EditQuizForm from "@/app/_components/EditQuizForm/page";
 import AssignForm from "@/app/_components/AssignStudentForm/page";
+import { url } from "@/app/_components/Url/page";
 
 interface Quiz {
   teacher_name: string;
@@ -53,15 +54,12 @@ export default function QuizMain() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/question/${e}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${url}/api/question/${e}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -75,7 +73,7 @@ export default function QuizMain() {
   const studentDelete = async (e: string) => {
     try {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${e}/${course_code}`,
+        `${url}/api/assignstudent/${e}/${course_code}`,
         {
           method: "DELETE",
           headers: {
@@ -96,7 +94,7 @@ export default function QuizMain() {
   useEffect(() => {
     const fetchQuiz = async () => {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/question/course/${course_code}/${teacherName}`
+        `${url}/api/question/course/${course_code}/${teacherName}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -105,7 +103,7 @@ export default function QuizMain() {
     };
     const studentInfo = async () => {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${course_code}/${teacherName}`
+        `${url}/api/assignstudent/${course_code}/${teacherName}`
       );
       const json = await response.json();
       if (response.ok) {
@@ -122,17 +120,17 @@ export default function QuizMain() {
       <Teacherdashboard>
         <div className="flex flex-col">
           <div className="mx-8 space-y-2 mt-2">
-            <h1 className="font-bold text-sm">Create Quiz</h1>
+            <h1 className="font-bold text-lg">Create Quiz</h1>
             <div className="space-x-4">
               <button
                 onClick={enableForm}
-                className="bg-[#FCC822] py-1 px-4 font-custom font-bold rounded text-white"
+                className="bg-black py-1 px-4 font-custom text-sm font-medium rounded text-white"
               >
                 <Link href={""}>+ Add New</Link>
               </button>
               <button
                 onClick={enableformTwo}
-                className="bg-[#FCC822] py-1 px-4 font-custom font-bold rounded text-white"
+                className="bg-black py-1 px-4 font-custom text-sm font-medium rounded text-white"
               >
                 <Link href={""}>+ Assign Student</Link>
               </button>

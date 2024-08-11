@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { url } from "@/app/_components/Url/page";
 
 interface Question {
   question: string;
@@ -36,7 +37,7 @@ export default function QuestionGenerator() {
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/studentans/view/${email}/${course_code}`
+        `${url}/api/studentans/view/${email}/${course_code}`
       );
       const json = await response.json();
       if (response.ok) {

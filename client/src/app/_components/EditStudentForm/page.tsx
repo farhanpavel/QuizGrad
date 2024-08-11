@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { url } from "../Url/page";
+
 interface StudentFormProps {
   onClose: () => void;
   selectedEmail: string | null;
@@ -27,16 +29,13 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
     console.log(studentData);
     if (password == confirmpassword) {
       try {
-        const response = await fetch(
-          `https://quizgrad-server-11zr.onrender.com/api/user/${selectedEmail}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-          }
-        );
+        const response = await fetch(`${url}/api/user/${selectedEmail}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
@@ -61,9 +60,7 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await fetch(
-          `https://quizgrad-server-11zr.onrender.com/api/user/${selectedEmail}`
-        );
+        const response = await fetch(`${url}/api/user/${selectedEmail}`);
         if (response.ok) {
           const json = await response.json();
           setUser((prevUser) => ({

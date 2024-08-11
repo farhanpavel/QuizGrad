@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { url } from "../Url/page";
 interface QuizFormProps {
   onClose: () => void;
   selectedId: string | null;
@@ -30,16 +31,13 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/question/${selectedId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(quiz),
-        }
-      );
+      const response = await fetch(`${url}/api/question/${selectedId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quiz),
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -54,9 +52,7 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await fetch(
-          `https://quizgrad-server-11zr.onrender.com/api/question/quiz/${selectedId}`
-        );
+        const response = await fetch(`${url}/api/question/quiz/${selectedId}`);
         if (response.ok) {
           const json = await response.json();
           setQuiz((prevUser) => ({

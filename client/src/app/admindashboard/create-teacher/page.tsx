@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import TeacherForm from "@/app/_components/TeacherForm/page";
 import EditTeacherForm from "@/app/_components/EditTeacherForm/page";
+import { url } from "@/app/_components/Url/page";
+
 interface teacher {
   name: string;
   email: string;
@@ -29,15 +31,12 @@ export default function CreateTeacher() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/user/${e}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${url}/api/user/${e}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -50,9 +49,7 @@ export default function CreateTeacher() {
   };
   useEffect(() => {
     const fetchTeacher = async () => {
-      const response = await fetch(
-        "https://quizgrad-server-11zr.onrender.com/api/teacher"
-      );
+      const response = await fetch(`${url}/api/teacher`);
       const json = await response.json();
       if (response.ok) {
         setTeacherData(json);
@@ -69,9 +66,9 @@ export default function CreateTeacher() {
             isFormVisible ? "opacity-50" : ""
           }`}
         >
-          <h1 className="font-bold text-sm">Create Teacher</h1>
+          <h1 className="font-bold text-lg">Create Teacher</h1>
           <button
-            className="bg-[#FCC822] py-1 px-4 font-custom font-bold rounded text-white"
+            className="bg-black py-1 px-4 text-sm  font-custom font-medium rounded text-white"
             onClick={enableForm}
           >
             <Link href={""}>+ Add New</Link>

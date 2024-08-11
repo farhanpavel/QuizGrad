@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Studentdashboard from "../page";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { url } from "@/app/_components/Url/page";
 
 interface student {
   teacher_name: string;
@@ -17,9 +18,7 @@ export default function Page() {
   const router = useRouter();
   useEffect(() => {
     const fetchStudent = async () => {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${studentemail}`
-      );
+      const response = await fetch(`${url}/api/assignstudent/${studentemail}`);
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);
@@ -35,7 +34,7 @@ export default function Page() {
     setClick(false);
     try {
       const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/assignstudent/${teacherName}/${id}/${studentemail}`,
+        `${url}/api/assignstudent/${teacherName}/${id}/${studentemail}`,
         {
           method: "PUT",
           headers: {
@@ -59,7 +58,7 @@ export default function Page() {
       <Studentdashboard>
         <div className="flex flex-col font-custom mx-8 space-y-2 mt-2 ">
           <div>
-            <h1 className="font-bold text-sm">Pending Exams: </h1>
+            <h1 className="font-bold text-lg">Pending Exams: </h1>
           </div>
           <div>
             <div className="shadow-md sm:rounded-lg inline">

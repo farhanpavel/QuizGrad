@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import StudentForm from "@/app/_components/StudentForm/page";
 import EditStudentForm from "@/app/_components/EditStudentForm/page";
+import { url } from "@/app/_components/Url/page";
 
 interface student {
   name: string;
@@ -31,15 +32,12 @@ export default function Page() {
   };
   const deletePass = async (e: string) => {
     try {
-      const response = await fetch(
-        `https://quizgrad-server-11zr.onrender.com/api/user/${e}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${url}/api/user/${e}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         alert("Server Error");
         throw new Error("Failed to submit data");
@@ -52,9 +50,7 @@ export default function Page() {
   };
   useEffect(() => {
     const fetchStudent = async () => {
-      const response = await fetch(
-        "https://quizgrad-server-11zr.onrender.com/api/student"
-      );
+      const response = await fetch(`${url}/api/student`);
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);
@@ -71,9 +67,9 @@ export default function Page() {
             isFormVisible ? "opacity-50" : ""
           }`}
         >
-          <h1 className="font-bold text-sm">Create Student</h1>
+          <h1 className="font-bold text-lg">Create Student</h1>
           <button
-            className="bg-[#FCC822] py-1 px-4 font-custom font-bold rounded text-white"
+            className="bg-black py-1 px-4 font-custom text-sm font-medium rounded text-white"
             onClick={enableForm}
           >
             <Link href={""}>+ Add New</Link>

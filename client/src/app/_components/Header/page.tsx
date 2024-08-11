@@ -13,9 +13,9 @@ export default function Header() {
             className="2xl:w-[400px]"
           />
         </div>
-        <div className="mt-[1.10rem] 2xl:mt-[1.4rem]  mx-8 hidden sm:block ">
+        <div className="mt-[1.15rem] 2xl:mt-[1.4rem]  mx-8 hidden sm:block ">
           <a
-            href="#_"
+            href="https://github.com/farhanpavel"
             className="relative inline-flex items-center justify-center p-4 px-6 py-2 2xl:px-12 2xl:py-4 overflow-hidden font-medium text-[#FCC822] transition duration-300 ease-out border-2 border-[#FCC822] rounded-full shadow-md group"
           >
             <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-[#FCC822] group-hover:translate-x-0 ease">
