@@ -5,6 +5,7 @@ import Dashboardheader from "../_components/Dashboardheader/page";
 import { ReactNode, useEffect, useState } from "react";
 import Dashboard from "../_components/Dashboard/page";
 import LoadingSpinner from "../_components/LoadingSpinner/page";
+
 interface LayoutProps {
   children: ReactNode;
 }
@@ -35,6 +36,7 @@ export default function Admindashboard({ children }: LayoutProps) {
   return (
     <div>
       <Dashboardheader />
+
       <div className="flex  ">
         <Dashboard />
         {loading ? <LoadingSpinner /> : <>{children}</>}

@@ -49,7 +49,7 @@ export default function QuizResults() {
     };
 
     fetchResults();
-  }, [teacherName]);
+  }, []);
 
   if (loading) return <div>Loading...</div>;
 

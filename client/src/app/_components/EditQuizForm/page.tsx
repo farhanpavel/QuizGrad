@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 interface QuizFormProps {
   onClose: () => void;
   selectedId: string | null;
 }
 const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
+  const { quizData, setquizData } = useAppContext();
   const [quiz, setQuiz] = useState({
     question: "",
     optionOne: "",
@@ -14,7 +16,7 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
     optionFour: "",
     ans: "",
   });
-  //   const [studentData, setStudentData] = useState([]);
+
   const router = useRouter();
   const { question, optionOne, optionTwo, optionThree, optionFour, ans } = quiz;
   const handleChange = (
@@ -43,6 +45,21 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setquizData((prevData) =>
+          prevData.map((item) =>
+            item.question_id === selectedId
+              ? {
+                  ...item,
+                  question,
+                  optionOne,
+                  optionTwo,
+                  optionThree,
+                  optionFour,
+                  ans,
+                }
+              : item
+          )
+        );
       }
     } catch (err) {
       console.log("error", err);
@@ -73,7 +90,7 @@ const EditQuizForm: React.FC<QuizFormProps> = ({ onClose, selectedId }) => {
     };
 
     fetchQuiz();
-  }, [selectedId]);
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

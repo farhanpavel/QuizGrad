@@ -3,8 +3,10 @@ import React from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import Admindashboard from "../page";
+
 export default function AdminHome() {
   const admin = Cookies.get("name");
+
   return (
     <Admindashboard>
       <div className="mt-2  text-sm sm:text-xl text-center font-bold mx-auto 2xl:text-5xl">

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import StudentForm from "@/app/_components/StudentForm/page";
 import EditStudentForm from "@/app/_components/EditStudentForm/page";
 import { url } from "@/app/_components/Url/page";
+import { useAppContext } from "@/app/_components/Context/page";
 
 interface student {
   name: string;
@@ -16,6 +17,7 @@ export default function Page() {
   const [studentData, setStudentData] = useState<student[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<string | null>(null);
   const [isEditFormVisible, setEditFormVisible] = useState<boolean>(false);
+  const { userData, setUserData } = useAppContext();
   const enableForm = () => {
     setFormVisible(true);
     setEditFormVisible(false);
@@ -42,6 +44,7 @@ export default function Page() {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setUserData((prevData) => prevData.filter((item) => item.email !== e));
       }
     } catch (err) {
       console.log("error", err);
@@ -52,11 +55,11 @@ export default function Page() {
       const response = await fetch(`${url}/api/student`);
       const json = await response.json();
       if (response.ok) {
-        setStudentData(json);
+        setUserData(json);
       }
     };
     fetchStudent();
-  }, [studentData]);
+  }, []);
 
   return (
     <div>
@@ -103,8 +106,8 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody>
-                {studentData &&
-                  studentData.map((data, index) => (
+                {userData &&
+                  userData.map((data, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 "

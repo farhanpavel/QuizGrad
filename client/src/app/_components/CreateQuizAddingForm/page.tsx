@@ -2,11 +2,13 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 interface QuizFormProps {
   onClose: () => void;
 }
 
 const QuizAddingForm: React.FC<QuizFormProps> = ({ onClose }) => {
+  const { quizData, setquizData } = useAppContext();
   const teacherName = Cookies.get("name");
   const courseCode = Cookies.get("code");
 
@@ -62,6 +64,7 @@ const QuizAddingForm: React.FC<QuizFormProps> = ({ onClose }) => {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setquizData((prevData) => [...prevData, quizData]);
       }
     } catch (err) {
       console.log("error", err);

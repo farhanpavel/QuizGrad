@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 
 interface StudentFormProps {
   onClose: () => void;
 }
 
 const StudentForm: React.FC<StudentFormProps> = ({ onClose }) => {
+  const { userData, setUserData } = useAppContext();
   const [user, setUser] = useState({
     id: 3,
     name: "",
@@ -36,6 +38,14 @@ const StudentForm: React.FC<StudentFormProps> = ({ onClose }) => {
           throw new Error("Failed to submit data");
         } else {
           alert("Success");
+          setUserData((prevData) => [
+            ...prevData,
+            {
+              name,
+              email,
+            },
+          ]);
+          console.log(userData);
           setUser({
             id: 3,
             name: "",

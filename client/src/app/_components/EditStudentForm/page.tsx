@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
+import { User } from "lucide-react";
 
 interface StudentFormProps {
   onClose: () => void;
@@ -17,7 +19,8 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
     password: "",
     confirmpassword: "",
   });
-  const [studentData, setStudentData] = useState([]);
+
+  const { userData, setUserData } = useAppContext();
   const router = useRouter();
   const { name, email, password, confirmpassword } = user;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +28,7 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
-    console.log(studentData);
+
     if (password == confirmpassword) {
       try {
         const response = await fetch(`${url}/api/user/${selectedEmail}`, {
@@ -41,6 +43,14 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
           throw new Error("Failed to submit data");
         } else {
           alert("Success");
+          setUserData((prevData) =>
+            prevData.map((item) =>
+              item.email === selectedEmail
+                ? { ...item, name: user.name, email: user.email }
+                : item
+            )
+          );
+
           setUser({
             id: 3,
             name: "",
@@ -79,7 +89,7 @@ const EditStudentForm: React.FC<StudentFormProps> = ({
     };
 
     fetchStudent();
-  }, [selectedEmail]);
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

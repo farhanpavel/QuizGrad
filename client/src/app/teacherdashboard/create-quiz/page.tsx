@@ -7,17 +7,15 @@ import Teacherdashboard from "../page";
 import QuizForm from "@/app/_components/CreateQuizForm/page";
 import { useRouter } from "next/navigation";
 import { url } from "@/app/_components/Url/page";
+import { useAppContext } from "@/app/_components/Context/page";
 
-interface quiz {
-  course_name: string;
-  course_code: string;
-}
 export default function CreateQuiz() {
   const [isFormVisible, setFormVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [quizData, setQuizData] = useState<quiz[]>([]);
+
   const teacherName = Cookies.get("name");
   const router = useRouter();
+  const { courseData, setcourseData } = useAppContext();
   useEffect(() => {
     const fetchData = async () => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -28,12 +26,12 @@ export default function CreateQuiz() {
       const json = await response.json();
 
       if (response.ok) {
-        setQuizData(json);
+        setcourseData(json);
       }
     };
     fetchCourse();
     fetchData();
-  }, [quizData]);
+  }, []);
 
   const enableForm = () => {
     setFormVisible(true);
@@ -58,6 +56,9 @@ export default function CreateQuiz() {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setcourseData((prevData) =>
+          prevData.filter((item) => item.course_code !== e)
+        );
       }
     } catch (err) {
       console.log("error", err);
@@ -111,8 +112,8 @@ export default function CreateQuiz() {
                   </tr>
                 </thead>
                 <tbody>
-                  {quizData &&
-                    quizData.map((data, index) => (
+                  {courseData &&
+                    courseData.map((data, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 "

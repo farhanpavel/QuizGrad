@@ -2,11 +2,13 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import QuizMain from "@/app/teacherdashboard/create-quiz-main/page";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 interface QuizFormProps {
   onClose: () => void;
 }
 
 const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
+  const { courseData, setcourseData } = useAppContext();
   const teacherName = Cookies.get("name");
   const [quiz, setQuiz] = useState({
     teacher_name: teacherName,
@@ -32,6 +34,13 @@ const QuizForm: React.FC<QuizFormProps> = ({ onClose }) => {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setcourseData((prevData) => [
+          ...prevData,
+          {
+            course_name,
+            course_code,
+          },
+        ]);
       }
     } catch (err) {
       console.log("error", err);

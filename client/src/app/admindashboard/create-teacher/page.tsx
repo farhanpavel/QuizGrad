@@ -6,16 +6,19 @@ import { useState, useEffect } from "react";
 import TeacherForm from "@/app/_components/TeacherForm/page";
 import EditTeacherForm from "@/app/_components/EditTeacherForm/page";
 import { url } from "@/app/_components/Url/page";
+import { useAppContext } from "@/app/_components/Context/page";
 
 interface teacher {
   name: string;
   email: string;
 }
 export default function CreateTeacher() {
+  const { userData, setUserData } = useAppContext();
   const [isFormVisible, setFormVisible] = useState<boolean>(false);
-  const [teacherData, setTeacherData] = useState<teacher[]>([]);
+  // const [teacherData, setTeacherData] = useState<teacher[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<string | null>(null);
   const [isEditFormVisible, setEditFormVisible] = useState<boolean>(false);
+
   const enableForm = () => {
     setFormVisible(true);
     setEditFormVisible(false);
@@ -42,6 +45,7 @@ export default function CreateTeacher() {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setUserData((prevData) => prevData.filter((item) => item.email !== e));
       }
     } catch (err) {
       console.log("error", err);
@@ -52,11 +56,11 @@ export default function CreateTeacher() {
       const response = await fetch(`${url}/api/teacher`);
       const json = await response.json();
       if (response.ok) {
-        setTeacherData(json);
+        setUserData(json);
       }
     };
     fetchTeacher();
-  }, [teacherData]);
+  }, []);
 
   return (
     <div>
@@ -103,8 +107,8 @@ export default function CreateTeacher() {
                 </tr>
               </thead>
               <tbody>
-                {teacherData &&
-                  teacherData.map((data, index) => (
+                {userData &&
+                  userData.map((data, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 "

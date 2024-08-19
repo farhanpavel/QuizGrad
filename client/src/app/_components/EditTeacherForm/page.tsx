@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 
 interface TeacherFormProps {
   onClose: () => void;
@@ -17,6 +18,7 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
     password: "",
     confirmpassword: "",
   });
+  const { userData, setUserData } = useAppContext();
   const [teacherData, setTeacherData] = useState([]);
   const router = useRouter();
   const { name, email, password, confirmpassword } = user;
@@ -25,8 +27,7 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
-    console.log(teacherData);
+
     if (password == confirmpassword) {
       try {
         const response = await fetch(`${url}/api/user/${selectedEmail}`, {
@@ -41,6 +42,13 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
           throw new Error("Failed to submit data");
         } else {
           alert("Success");
+          setUserData((prevData) =>
+            prevData.map((item) =>
+              item.email === selectedEmail
+                ? { ...item, name: user.name, email: user.email }
+                : item
+            )
+          );
           setUser({
             id: 2,
             name: "",
@@ -79,7 +87,7 @@ const EditTeacherForm: React.FC<TeacherFormProps> = ({
     };
 
     fetchTeacher();
-  }, [selectedEmail]);
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

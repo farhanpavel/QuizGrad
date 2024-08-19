@@ -16,6 +16,7 @@ export default function Page() {
   const [isClicked, setClick] = useState<boolean>(true);
   const studentemail = Cookies.get("studentemail");
   const router = useRouter();
+
   useEffect(() => {
     const fetchStudent = async () => {
       const response = await fetch(`${url}/api/assignstudent/${studentemail}`);
@@ -25,7 +26,7 @@ export default function Page() {
       }
     };
     fetchStudent();
-  }, [studentData]);
+  }, []);
   const takeExam = async (name: string, code: string) => {
     Cookies.set("teachername", name.toString());
     Cookies.set("code", code.toString());

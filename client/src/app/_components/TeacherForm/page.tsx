@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 
 interface TeacherFormProps {
   onClose: () => void;
@@ -14,6 +15,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
     password: "",
     confirmpassword: "",
   });
+  const { userData, setUserData } = useAppContext();
   const router = useRouter();
   const { name, email, password, confirmpassword } = user;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +23,7 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
+
     if (password == confirmpassword) {
       try {
         const response = await fetch(`${url}/api/user`, {
@@ -36,6 +38,14 @@ const TeacherForm: React.FC<TeacherFormProps> = ({ onClose }) => {
           throw new Error("Failed to submit data");
         } else {
           alert("Success");
+          setUserData((prevData) => [
+            ...prevData,
+            {
+              name,
+              email,
+            },
+          ]);
+          console.log(userData);
           setUser({
             id: 2,
             name: "",

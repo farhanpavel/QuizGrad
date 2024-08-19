@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { url } from "../Url/page";
+import { useAppContext } from "../Context/page";
 
 interface QuizFormProps {
   onClose: () => void;
@@ -15,6 +16,7 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
     { _id: string; email: string }[]
   >([]);
   const [studentNameInput, setStudentNameInput] = useState("");
+  const { assignData, setassignData } = useAppContext();
   const teacherName = Cookies.get("name");
   const courseCode = Cookies.get("code");
   const router = useRouter();
@@ -39,6 +41,13 @@ const AssignForm: React.FC<QuizFormProps> = ({ onClose }) => {
         if (!response.ok) {
           alert("Server Error");
           throw new Error("Failed to submit data");
+        } else {
+          setassignData((prevData) => [
+            ...prevData,
+            {
+              student_email: student.email,
+            },
+          ]);
         }
       } catch (err) {
         console.error("Error submitting data:", err);

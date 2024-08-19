@@ -7,25 +7,11 @@ import QuizAddingForm from "@/app/_components/CreateQuizAddingForm/page";
 import EditQuizForm from "@/app/_components/EditQuizForm/page";
 import AssignForm from "@/app/_components/AssignStudentForm/page";
 import { url } from "@/app/_components/Url/page";
+import { useAppContext } from "@/app/_components/Context/page";
 
-interface Quiz {
-  teacher_name: string;
-  course_id: string;
-  question: string;
-  optionOne: string;
-  optionTwo: string;
-  optionThree: string;
-  optionFour: string;
-  ans: string;
-  question_id: string;
-}
-interface student {
-  student_email: string;
-}
 export default function QuizMain() {
-  const [quizData, setQuizData] = useState<Quiz[]>([]);
-  const [studentData, setStudentData] = useState<student[]>([]);
-
+  const { quizData, setquizData } = useAppContext();
+  const { assignData, setassignData } = useAppContext();
   const course_code = Cookies.get("code");
   const [isFormVisible, setFormVisible] = useState(false);
   const [isFormTwoVisible, setFormTwoVisible] = useState(false);
@@ -65,6 +51,9 @@ export default function QuizMain() {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setquizData((prevData) =>
+          prevData.filter((item) => item.question_id !== e)
+        );
       }
     } catch (err) {
       console.log("error", err);
@@ -86,6 +75,9 @@ export default function QuizMain() {
         throw new Error("Failed to submit data");
       } else {
         alert("Success");
+        setassignData((prevData) =>
+          prevData.filter((item) => item.student_email !== e)
+        );
       }
     } catch (err) {
       console.log("error", err);
@@ -98,7 +90,8 @@ export default function QuizMain() {
       );
       const json = await response.json();
       if (response.ok) {
-        setQuizData(json);
+        console.log(json);
+        setquizData(json);
       }
     };
     const studentInfo = async () => {
@@ -107,13 +100,13 @@ export default function QuizMain() {
       );
       const json = await response.json();
       if (response.ok) {
-        setStudentData(json);
+        setassignData(json);
       }
     };
 
     fetchQuiz();
     studentInfo();
-  }, [studentData, quizData]);
+  }, []);
 
   return (
     <div>
@@ -218,8 +211,8 @@ export default function QuizMain() {
                   </tr>
                 </thead>
                 <tbody>
-                  {studentData &&
-                    studentData.map((data, index) => (
+                  {assignData &&
+                    assignData.map((data, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 "

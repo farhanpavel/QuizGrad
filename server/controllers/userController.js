@@ -91,7 +91,9 @@ const userPut = async (req, res) => {
 };
 const userDelete = async (req, res) => {
   try {
-    const userData = await User.deleteOne({ email: req.params.email });
+    const userData = await User.deleteOne({
+      email: req.params.email,
+    });
     const Data = await Student.deleteOne({ email: req.params.email });
     if (Data.deletedCount == 0) {
       const Data = await Teacher.deleteOne({ email: req.params.email });
