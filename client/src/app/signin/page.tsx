@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { url } from "../_components/Url/page";
+import LoadingSpinner from "../_components/LoadingSpinner/page";
 
 export default function Signin() {
   const [user, setUser] = useState({ email: "", password: "" });
   const { email, password } = user;
   const [loading, setLoading] = useState(true);
+  const [isSpin, setSpin] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -41,6 +43,12 @@ export default function Signin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!email || !password) {
+      alert("Please fill in both email and password.");
+      return;
+    }
+
+    setSpin(false);
     try {
       const response = await fetch(`${url}/api/user/${email}`, {
         method: "GET",
@@ -60,14 +68,18 @@ export default function Signin() {
         alert("Login successful!");
 
         if (data.id === 1) {
+          setSpin(true);
           router.push("/admindashboard/home");
         } else if (data.id === 2) {
+          setSpin(true);
           router.push("/teacherdashboard/home");
         } else if (data.id === 3) {
+          setSpin(true);
           router.push("/studentdashboard/home");
         }
       } else {
         alert("Invalid email and password");
+        setSpin(true);
       }
     } catch (err) {
       console.log("error", err);
@@ -76,73 +88,79 @@ export default function Signin() {
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-[80%] sm:w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
-          <div className="space-y-7 flex flex-wrap flex-col justify-center items-center">
-            <div>
+      {isSpin ? (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="w-[80%] sm:w-3/4 m-auto  flex flex-wrap sm:flex-nowrap  shadow-lg shadow-yellow-600 justify-around text-center p-16 ">
+            <div className="space-y-7 flex flex-wrap flex-col justify-center items-center">
+              <div>
+                <Image
+                  src="/images/Logo.png"
+                  width={300}
+                  height={300}
+                  alt="logo"
+                  className="m-auto sm:w-[300px] 2xl:w-[500px]"
+                />
+              </div>
+              <div className="text-center space-y-1 2xl:text-2xl text-md">
+                <h1>Welcome back!</h1>
+                <p>Please Login To Your Account</p>
+              </div>
+              <div className="2xl:w-3/4">
+                <form
+                  action=""
+                  className="flex flex-col gap-y-2"
+                  onSubmit={handleSubmit}
+                >
+                  <input
+                    type="email"
+                    name="email"
+                    className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
+                    placeholder="Email"
+                    onChange={handleChange}
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
+                    placeholder="Password"
+                    onChange={handleChange}
+                  />
+
+                  <div className="space-x-3">
+                    <button
+                      type="submit"
+                      className="px-6 py-2 bg-[#FCC822] text-white"
+                    >
+                      Login
+                    </button>
+                    <button>
+                      <Link
+                        href={"/signup"}
+                        className="px-6 py-2 border-[1px] border-[#FCC822] text-[#FCC822]"
+                      >
+                        Sign up
+                      </Link>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="order-first sm:order-last flex items-center">
               <Image
-                src="/images/Logo.png"
-                width={300}
-                height={300}
+                src="/images/Graduatelogo.png"
+                width={400}
+                height={400}
                 alt="logo"
-                className="m-auto sm:w-[300px] 2xl:w-[500px]"
+                className="lg:w-[400px] md:w-[300px] 2xl:w-[500px]"
               />
             </div>
-            <div className="text-center space-y-1 2xl:text-2xl text-md">
-              <h1>Welcome back!</h1>
-              <p>Please Login To Your Account</p>
-            </div>
-            <div className="2xl:w-3/4">
-              <form
-                action=""
-                className="flex flex-col gap-y-2"
-                onSubmit={handleSubmit}
-              >
-                <input
-                  type="email"
-                  name="email"
-                  className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
-                  placeholder="Email"
-                  onChange={handleChange}
-                />
-                <input
-                  type="password"
-                  name="password"
-                  className="border-[1px] border-[#C1BBBB] p-1 rounded-sm"
-                  placeholder="Password"
-                  onChange={handleChange}
-                />
-
-                <div className="space-x-3">
-                  <button
-                    type="submit"
-                    className="px-6 py-2 bg-[#FCC822] text-white"
-                  >
-                    Login
-                  </button>
-                  <button>
-                    <Link
-                      href={"/signup"}
-                      className="px-6 py-2 border-[1px] border-[#FCC822] text-[#FCC822]"
-                    >
-                      Sign up
-                    </Link>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="order-first sm:order-last flex items-center">
-            <Image
-              src="/images/Graduatelogo.png"
-              width={400}
-              height={400}
-              alt="logo"
-              className="lg:w-[400px] md:w-[300px] 2xl:w-[500px]"
-            />
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <LoadingSpinner />
+        </div>
+      )}
     </div>
   );
 }
