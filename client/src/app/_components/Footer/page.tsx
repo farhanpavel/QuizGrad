@@ -24,7 +24,7 @@ export default function Footer() {
       <div className="p-7 mt-5 ">
         <div className="border-t-[0.1px] p-4 mb-7 border-[#e0dede]">
           <div className="sm:flex sm:flex-wrap sm:justify-between font-rubik text-[#4a4a4a]">
-            <div>
+            <div className="text-center">
               <p>Copyright © 2024 | Pavel, All rights reserved.</p>
             </div>
             <div>
