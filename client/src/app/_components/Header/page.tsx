@@ -1,46 +1,166 @@
-import React from "react";
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/lJwnQlHSEBA
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
 import Image from "next/image";
 export default function Header() {
   return (
-    <div>
-      <div className="flex flex-wrap justify-between  p-4 border-[1px] border-[#ECECE8] ">
-        <div>
+    <header className="flex h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 font-rubik">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="lg:hidden bg-[#f7f7f3]"
+          >
+            <MenuIcon className="h-6 w-6 " />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <Link href="#" prefetch={false}>
+            <Image
+              src="/images/Logo.png"
+              width={260}
+              height={200}
+              alt="logo"
+              className="2xl:w-[400px]"
+            />
+            <span className="sr-only">Company Logo</span>
+          </Link>
+          <div className="grid gap-2 py-6">
+            <Link
+              href="#benefits"
+              className="flex w-full items-center py-2 text-lg font-semibold "
+              prefetch={false}
+            >
+              Benefits
+            </Link>
+            <Link
+              href="#feature"
+              className="flex w-full items-center py-2 text-lg font-semibold"
+              prefetch={false}
+            >
+              Features
+            </Link>
+            <Link
+              href="#work"
+              className="flex w-full items-center py-2 text-lg font-semibold"
+              prefetch={false}
+            >
+              How it Works
+            </Link>
+          </div>
+        </SheetContent>
+      </Sheet>
+      <div>
+        <Link href="#" className="mr-6 hidden lg:flex " prefetch={false}>
           <Image
             src="/images/Logo.png"
-            width={260}
-            height={200}
+            width={190}
+            height={100}
             alt="logo"
-            className="2xl:w-[400px]"
+            className="2xl:w-[320px]"
           />
-        </div>
-        <div className="mt-[1.15rem] 2xl:mt-[1.4rem]  mx-8 hidden sm:block ">
-          <a
-            href="https://github.com/farhanpavel"
-            className="relative inline-flex items-center justify-center p-4 px-6 py-2 2xl:px-12 2xl:py-4 overflow-hidden font-medium text-[#FCC822] transition duration-300 ease-out border-2 border-[#FCC822] rounded-full shadow-md group"
-          >
-            <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-[#FCC822] group-hover:translate-x-0 ease">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                ></path>
-              </svg>
-            </span>
-            <span className="absolute flex items-center justify-center w-full h-full text-[#FCC822] transition-all duration-300 transform group-hover:translate-x-full ease">
-              @Pavel
-            </span>
-            <span className="relative invisible">@pavel</span>
-          </a>
-        </div>
+          <span className="sr-only">Company Logo</span>
+        </Link>
       </div>
-    </div>
+      <div>
+        <NavigationMenu className="hidden lg:flex">
+          <NavigationMenuList className="space-x-14  2xl:space-x-24 mt-2 flex justify-center items-center">
+            <NavigationMenuLink asChild>
+              <Link
+                href="#benefits"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md 
+                 px-4 py-2 text-lg 2xl:text-2xl  font-medium transition-all 
+                 text-yellow-400 hover:shadow-md hover:shadow-yellow-400 hover:delay-300 hover:duration-200 hover:py-1"
+                prefetch={false}
+              >
+                Benefits
+              </Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link
+                href="#feature"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md 
+                px-4 py-2 text-lg 2xl:text-2xl  font-medium transition-all 
+                text-yellow-400 hover:shadow-md hover:shadow-yellow-400 hover:delay-300 hover:duration-200 hover:py-1"
+                prefetch={false}
+              >
+                Feature
+              </Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild>
+              <Link
+                href="#work"
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md 
+                 px-4 py-2 text-lg 2xl:text-2xl  font-medium transition-all 
+                 text-yellow-400 hover:shadow-md hover:shadow-yellow-400 hover:delay-300 hover:duration-200 hover:py-1"
+                prefetch={false}
+              >
+                How it Works
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+      <div>
+        <Link
+          href="/signin"
+          className="bg-[#FCC822] px-6 py-3 text-white rounded-lg font-semibold 2xl:px-8 2xl:py-4"
+        >
+          Login
+        </Link>
+      </div>
+    </header>
   );
 }
+
+function MenuIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}
+
+// function MountainIcon(props) {
+//   return (
+//     <svg
+//       {...props}
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="24"
+//       height="24"
+//       viewBox="0 0 24 24"
+//       fill="none"
+//       stroke="currentColor"
+//       strokeWidth="2"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     >
+//       <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+//     </svg>
+//   );
+// }
