@@ -1,1 +1,1 @@
-export const url = "http://localhost:4000";
+export const url = "https://quizgrad-server-11zr.onrender.com";
