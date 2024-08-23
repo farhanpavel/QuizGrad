@@ -64,7 +64,7 @@ export default function Home() {
 
       <div className=" mt-10 " id="benefits">
         <div className="font-rubik text-center text-xl   text-[#4a4a4a] uppercase">
-          <p>Benefits</p>
+          <p className="text-[#FCC822]">Benefits</p>
         </div>
         <div className="font-sansSerif text-center text-5xl  mt-5 font-medium text-[#4a4a4a] ">
           <h1>
@@ -166,7 +166,7 @@ export default function Home() {
       </div>
       <div className="mt-10 " id="feature">
         <div className="font-rubik text-center text-xl   text-[#4a4a4a] uppercase">
-          <p>Unlock Your Potential</p>
+          <p className="text-[#FCC822]">Unlock Your Potential</p>
         </div>
         <div className="font-sansSerif text-center text-5xl  mt-5 w-[70%] mx-auto font-medium text-[#4a4a4a] ">
           <h1>Elevate Your Exam Preparation with QuizyGrad Features</h1>
