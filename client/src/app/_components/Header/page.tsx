@@ -33,7 +33,7 @@ export default function Header() {
               width={260}
               height={200}
               alt="logo"
-              className="2xl:w-[400px]"
+             
             />
             <span className="sr-only">Company Logo</span>
           </Link>
@@ -69,7 +69,7 @@ export default function Header() {
             width={190}
             height={100}
             alt="logo"
-            className="2xl:w-[320px]"
+           
           />
           <span className="sr-only">Company Logo</span>
         </Link>
